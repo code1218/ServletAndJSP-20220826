@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.servlet.study.web.domain.user.User;
 import com.servlet.study.web.domain.user.UserRepository;
 
 import lombok.NonNull;
@@ -27,6 +28,16 @@ public class UserServiceImpl implements UserService {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("checkFlag", result > 0 ? false : true);
+		
+		return getGson().toJson(resultMap);
+	}
+	
+	@Override
+	public String addUser(User user) {
+		int result = userRepository.save(user);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("status", result > 0);
 		
 		return getGson().toJson(resultMap);
 	}

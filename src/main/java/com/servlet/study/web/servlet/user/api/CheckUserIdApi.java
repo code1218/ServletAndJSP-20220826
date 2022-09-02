@@ -1,7 +1,6 @@
-package com.servlet.study.web.servlet.auth.api;
+package com.servlet.study.web.servlet.user.api;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,35 +10,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.servlet.study.web.service.UserService;
-import com.servlet.study.web.service.UserServiceImpl;
 
-@WebServlet("/api/v1/auth/management/users")
-public class UserManagementApi extends HttpServlet {
+@WebServlet("/api/v1/user/overlap/user-id")
+public class CheckUserIdApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
 	private UserService userService;
-
-    public UserManagementApi() {
+	
+    public CheckUserIdApi() {
         super();
     }
     
     @Override
     public void init(ServletConfig config) throws ServletException {
-    	userService = (UserServiceImpl) config.getServletContext().getAttribute("userService");
+    	userService = (UserService) config.getServletContext().getAttribute("userService");
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json; charset=utf-8");
+		String userId = request.getParameter("userId");
 		
-		PrintWriter out = response.getWriter();
-		out.print(userService.getUserList());
+		response.setContentType("application/json; charset=utf-8");
+		response.getWriter().print(userService.checkUserId(userId));
 	}
 }
-
-
-
-
-
 
 
 

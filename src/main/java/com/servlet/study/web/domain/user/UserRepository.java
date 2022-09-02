@@ -108,6 +108,31 @@ public class UserRepository {
 		
 		return result;
 	}
+	
+	public int save(User user) {
+		int result = 0;
+		String sql = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = pool.getConnection();
+			sql = "insert into user_mst values(0, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUser_id());
+			pstmt.setString(2, user.getUser_password());
+			pstmt.setString(3, user.getUser_name());
+			pstmt.setString(4, user.getUser_email());
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		
+		return result;
+	}
 }
 
 
