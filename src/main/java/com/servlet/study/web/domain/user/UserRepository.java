@@ -80,6 +80,34 @@ public class UserRepository {
 		
 		return list;
 	}
+	
+	public int checkUserId(String userId) {
+		String sql = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int result = 0;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from user_mst where user_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		
+		return result;
+	}
 }
 
 
