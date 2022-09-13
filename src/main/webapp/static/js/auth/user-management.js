@@ -32,7 +32,7 @@ function getUserList(userList) {
 		tbody.innerHTML += `
 			<tr>
 				<td class="usercode-text">${user.user_code}</td>
-				<td>${user.user_id}</td>
+				<td class="userid-text">${user.user_id}</td>
 				<td>${user.user_password}</td>
 				<td>${user.user_name}</td>
 				<td>${user.user_email}</td>
@@ -96,7 +96,32 @@ function getUserList(userList) {
 		}
 	}
 	
+	const deleteButtons = document.querySelectorAll(".delete-button");
 	
+	for(let i = 0; i < deleteButtons.length; i++) {
+		deleteButtons[i].onclick = () => {
+			const userCodeText = document.querySelectorAll(".usercode-text")[i].textContent;
+			const userIdText = document.querySelectorAll(".userid-text")[i].textContent;
+			
+			if(confirm(`${userIdText}을(를) 정말 지우시겠습니까?`)){
+				$.ajax({
+					async: false,
+					type: "post",
+					url: "/api/v1/user/delete",
+					data: {
+						userCode : userCodeText
+					},
+					dataType: "json",
+					success: (response) => {
+						load();
+					},
+					error: (error) => {
+						console.log(error);
+					}
+				});
+			}
+		}
+	}
 }
 
 
