@@ -21,7 +21,9 @@ import com.servlet.study.web.servlet.dto.PrincipalUser;
 @WebFilter("/*")
 public class AuthenticationFilter extends HttpFilter implements Filter {
 
-    public AuthenticationFilter() {
+	private static final long serialVersionUID = 1L;
+
+	public AuthenticationFilter() {
         super();
     }
 
